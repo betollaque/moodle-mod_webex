@@ -50,6 +50,7 @@ class mod_webex_mod_form extends moodleform_mod {
         //-------------------------------------------------------
         $mform->addElement('header', 'content', get_string('contentheader', 'webex'));
         $mform->addElement('text', 'externalurl', get_string('externalurl', 'webex'), array('size'=>'48')); 
+        $mform->setType('externalurl', PARAM_TEXT);
 		$mform->addElement('static', 'parametersinfo', '', 'http://<b style="color:red">yoursite</b>.webex.com/');
         $mform->addRule('externalurl', null, 'required', null, 'client');
         //-------------------------------------------------------
@@ -62,7 +63,6 @@ class mod_webex_mod_form extends moodleform_mod {
         }
         if (count($options) == 1) {
             $mform->addElement('hidden', 'display');
-            $mform->setType('display', PARAM_INT);
             reset($options);
             $mform->setDefault('display', key($options));
         } else {
@@ -71,6 +71,7 @@ class mod_webex_mod_form extends moodleform_mod {
             $mform->setAdvanced('display', $config->display_adv);
             $mform->addHelpButton('display', 'displayselect', 'webex');
         }
+        $mform->setType('display', PARAM_INT);
 
         if (array_key_exists(RESOURCELIB_DISPLAY_POPUP, $options)) {
             $mform->addElement('text', 'popupwidth', get_string('popupwidth', 'webex'), array('size'=>3));
@@ -110,15 +111,19 @@ class mod_webex_mod_form extends moodleform_mod {
         $mform->addElement('header', 'parameterssection', get_string('parametersheader', 'webex'));
         $mform->addElement('static', 'parametersinfo', '', get_string('parametersheader_help', 'webex'));
         //$mform->setAdvanced('parametersinfo');
-      		
-				$mform->addElement('text', 'variable_0', '', array('value'=>'AT','style'=>'display:none'));
-                $mform->addElement('text', 'parameter_0', '', array('value'=>'JM','style'=>'display:none'));
-			
-			
-              $mform->addElement('text', 'variable_1', '', array('value'=>'MK','readonly'=>'readonly','style'=>'display:none'));
-			  $mform->addElement('text', 'parameter_1', get_string('mettingkey', 'webex'), array('size'=>'12'));
-			  $mform->addElement('text', 'variable_2', '', array('value'=>'PW','readonly'=>'yes','style'=>'display:none'));
-			  $mform->addElement('text', 'parameter_2', get_string('password', 'webex'), array('size'=>'12'));
+
+        $mform->addElement('hidden', 'variable_0', 'AT');
+        $mform->setType('variable_0', PARAM_TEXT);
+        $mform->addElement('hidden', 'parameter_0', 'JM');
+        $mform->setType('parameter_0', PARAM_TEXT);
+        $mform->addElement('hidden', 'variable_1', 'MK');
+        $mform->setType('variable_1', PARAM_TEXT);
+        $mform->addElement('text', 'parameter_1', get_string('mettingkey', 'webex'), array('size'=>'12'));
+        $mform->setType('parameter_1', PARAM_TEXT);
+        $mform->addElement('hidden', 'variable_2', 'PW');
+        $mform->setType('variable_2', PARAM_TEXT);
+        $mform->addElement('passwordunmask', 'parameter_2', get_string('password', 'webex'), array('size'=>'12'));
+        $mform->setType('parameter_2', PARAM_TEXT);
 
         //-------------------------------------------------------
         $this->standard_coursemodule_elements();
